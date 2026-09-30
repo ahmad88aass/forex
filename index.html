@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>فوركس الأمريكي - التسجيل في خدمة التداول</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tahoma,Arial,sans-serif;background:#0b0f17;color:#e6e9ef;min-height:100vh;padding-top:70px}
+header{position:fixed;top:0;left:0;right:0;z-index:10;background:#121826;border-bottom:1px solid #d4af37;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;flex-wrap:wrap;gap:8px}
+.gold{font-weight:bold;color:#d4af37;font-size:14px}
+.up{color:#2ecc71}.down{color:#e74c3c}
+header a{color:#25d366;text-decoration:none;font-size:13px;font-weight:bold}
+.wrap{max-width:520px;margin:24px auto;padding:0 14px}
+.card{background:#111827;border:1px solid #d4af37;border-radius:14px;padding:22px;box-shadow:0 0 18px rgba(212,175,55,.25)}
+h1{font-size:20px;color:#d4af37;text-align:center;margin-bottom:6px}
+.sub{text-align:center;font-size:13px;color:#9aa4b5;margin-bottom:16px}
+.warn{background:#2a1a1a;border:1px solid #e74c3c;color:#f5b7b1;border-radius:8px;padding:10px;font-size:13px;margin-bottom:16px;line-height:1.7}
+label{display:block;font-size:13px;margin:12px 0 5px;color:#c9d1de}
+input[type=text],input[type=tel],select{width:100%;padding:11px;border-radius:8px;border:1px solid #2b3446;background:#0b0f17;color:#fff;font-size:15px}
+input:focus,select:focus{outline:none;border-color:#d4af37}
+.dob{display:flex;gap:8px}
+.terms{display:flex;gap:10px;align-items:flex-start;margin:18px 0;font-size:13px;line-height:1.8}
+.terms input{margin-top:6px;width:18px;height:18px;accent-color:#d4af37}
+#send{width:100%;padding:13px;border:none;border-radius:8px;font-size:16px;font-weight:bold;background:#2a2f3a;color:#666;cursor:not-allowed}
+#send.on{background:linear-gradient(90deg,#d4af37,#f0d060);color:#111;cursor:pointer}
+#msg{margin-top:12px;text-align:center;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="gold">XAU/USD: <span id="price">...</span> <span id="chg"></span></div>
+  <a href="https://wa.me/963984335910" target="_blank">الإدارة: +963 984 335 910</a>
+</header>
+
+<div class="wrap"><div class="card">
+  <h1>فوركس الأمريكي</h1>
+  <div class="sub">التسجيل في خدمة التداول اليومي</div>
+  <div class="warn">تنبيه: التداول في الأسواق المالية ينطوي على مخاطر عالية وقد تخسر كامل رأس المال المودع. لا توجد أي ضمانات للأرباح، وهذه الخدمة ليست وظيفة بدخل ثابت. الإيداع المطلوب: 5$ في المرة الأولى و5$ في المرة الأخيرة فقط.</div>
+
+  <label>الاسم الأول</label>
+  <input type="text" id="fname">
+  <label>الكنية / اسم العائلة</label>
+  <input type="text" id="lname">
+  <label>رقم الهاتف مع رمز الدولة</label>
+  <input type="tel" id="phone" placeholder="+963...">
+  <label>الجنس</label>
+  <select id="gender"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
+  <label>تاريخ الميلاد</label>
+  <div class="dob">
+    <select id="day"><option value="">اليوم</option></select>
+    <select id="month"><option value="">الشهر</option></select>
+    <select id="year"><option value="">السنة</option></select>
+  </div>
+  <label>مكان السكن الحالي</label>
+  <input type="text" id="city">
+
+  <div class="terms">
+    <input type="checkbox" id="agree" onchange="toggleBtn()" onclick="toggleBtn()">
+    <label for="agree" style="margin:0">أوافق على جميع الشروط والأحكام، وأقر بأن التداول ينطوي على مخاطر، وبأن الإيداع 5$ في المرة الأولى و5$ في المرة الأخيرة فقط، وأتحمل كامل المسؤولية في حال خسارة رأس المال المودع.</label>
+  </div>
+
+  <button id="send" type="button" disabled onclick="sendForm()">موافقة وإرسال</button>
+  <div id="msg"></div>
+</div></div>
+
+<script>
+function toggleBtn(){
+  var a=document.getElementById('agree');
+  var b=document.getElementById('send');
+  b.disabled=!a.checked;
+  if(a.checked){b.classList.add('on');}else{b.classList.remove('on');}
+}
+</script><script>
+function fillDate(){
+  var d=document.getElementById('day');
+  var m=document.getElementById('month');
+  var y=document.getElementById('year');
+  var i,o;
+  for(i=1;i<=31;i++){o=document.createElement('option');o.value=i;o.textContent=i;d.appendChild(o);}
+  for(i=1;i<=12;i++){o=document.createElement('option');o.value=i;o.textContent=i;m.appendChild(o);}
+  var cy=new Date().getFullYear()-18;
+  for(i=cy;i>=1940;i--){o=document.createElement('option');o.value=i;o.textContent=i;y.appendChild(o);}
+}
+fillDate();
+</script>
+
+<script>
+var BOT_TOKEN="8876047299:AAEnzdL0n2Cp4kvn64YCcrVHZFSv3ho6IDE";
+var CHAT_ID="6729808723";
+
+function val(id){return document.getElementById(id).value;}
+
+function sendForm(){
+  var msg=document.getElementById('msg');
+  var text="طلب تسجيل جديد\n"+
+    "الاسم: "+val('fname')+" "+val('lname')+"\n"+
+    "الهاتف: "+val('phone')+"\n"+
+    "الجنس: "+val('gender')+"\n"+
+    "تاريخ الميلاد: "+val('day')+"/"+val('month')+"/"+val('year')+"\n"+
+    "السكن: "+val('city');
+  msg.style.color='#d4af37';
+  msg.textContent='جاري الإرسال...';
+  fetch("https://api.telegram.org/bot"+BOT_TOKEN+"/sendMessage",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({chat_id:CHAT_ID,text:text})
+  }).then(function(r){return r.json();}).then(function(j){
+    if(j.ok){msg.style.color='#2ecc71';msg.textContent='تم الإرسال بنجاح ✔';}
+    else{msg.style.color='#e74c3c';msg.textContent='فشل الإرسال: '+(j.description||'');}
+  }).catch(function(){
+    msg.style.color='#e74c3c';msg.textContent='خطأ في الاتصال';
+  });
+}
+</script>
+
+<script>
+var lastPrice=null;
+function gold(){
+  fetch('https://api.gold-api.com/price/XAU').then(function(r){return r.json();}).then(function(j){
+    var p=Number(j.price);
+    document.getElementById('price').textContent='$'+p.toFixed(2);
+    if(lastPrice!==null){
+      var c=document.getElementById('chg');
+      var diff=p-lastPrice;
+      c.className=diff>=0?'up':'down';
+      c.textContent=(diff>=0?'▲ ':'▼ ')+Math.abs(diff).toFixed(2);
+    }
+    lastPrice=p;
+  }).catch(function(){
+    document.getElementById('price').textContent='غير متاح';
+  });
+}
+gold();
+setInterval(gold,15000);
+</script>
+</body>
+</html>
