@@ -93,12 +93,21 @@ function val(id){return document.getElementById(id).value;}
 
 function sendForm(){
   var msg=document.getElementById('msg');
+  var btn=document.getElementById('send');
+  try{
+    if(localStorage.getItem('forex_done')){
+      msg.style.color='#e74c3c';
+      msg.textContent='تم التسجيل من هذا الجهاز مسبقاً';
+      return;
+    }
+  }catch(e){}
   var text="طلب تسجيل جديد\n"+
     "الاسم: "+val('fname')+" "+val('lname')+"\n"+
     "الهاتف: "+val('phone')+"\n"+
     "الجنس: "+val('gender')+"\n"+
     "تاريخ الميلاد: "+val('day')+"/"+val('month')+"/"+val('year')+"\n"+
     "السكن: "+val('city');
+  btn.disabled=true;
   msg.style.color='#d4af37';
   msg.textContent='جاري الإرسال...';
   fetch("https://api.telegram.org/bot"+BOT_TOKEN+"/sendMessage",{
@@ -106,12 +115,22 @@ function sendForm(){
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({chat_id:CHAT_ID,text:text})
   }).then(function(r){return r.json();}).then(function(j){
-    if(j.ok){msg.style.color='#2ecc71';msg.textContent='تم الإرسال بنجاح ✔';}
-    else{msg.style.color='#e74c3c';msg.textContent='فشل الإرسال: '+(j.description||'');}
+    if(j.ok){
+      try{localStorage.setItem('forex_done','1');}catch(e){}
+      msg.style.color='#2ecc71';
+      msg.textContent='تم الإرسال بنجاح ✔';
+    }else{
+      btn.disabled=false;
+      msg.style.color='#e74c3c';
+      msg.textContent='فشل الإرسال';
+    }
   }).catch(function(){
-    msg.style.color='#e74c3c';msg.textContent='خطأ في الاتصال';
+    btn.disabled=false;
+    msg.style.color='#e74c3c';
+    msg.textContent='خطأ في الاتصال';
   });
 }
+
 </script>
 
 <script>
